@@ -66,6 +66,26 @@ Note: These steps should only be used for an app in development as your dev toke
 2. Generate a Dropbox `Generated access token` and save it.
 3. Set it as the environment variable `DROPBOX_ACCESS_TOKEN`. In order to do this on Heroku use the command `heroku config:set DROPBOX_ACCESS_TOKEN=<access token here>`
 
+### Running with Docker
+
+````
+DROPBOX_ACCESS_TOKEN=<access token here> docker-compose up
+````
+
+Get the ngrok url:
+
+````
+curl -Ls $(docker port dropboxmedialibrarysample_ngrok_1 4040)/api/tunnels/command_line | python -c 'import sys, json; print json.load(sys.stdin)["public_url"]'
+````
+
+Test using:
+
+````
+open http://<ngrok url>/v1/status
+````
+
+Should return a blank page.
+
 ## Testing your Media Library App with Runscope
 
 Before you can release a Media Library app for use with the Hootsuite platform, your app must pass a set of tests verifying
