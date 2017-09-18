@@ -1,0 +1,22 @@
+version: "2"
+
+services:
+  mediaapp:
+    build: .
+    command: nodemon --inspect=0.0.0.0:9224 index.js
+    environment:
+      - DROPBOX_ACCESS_TOKEN=${DROPBOX_ACCESS_TOKEN}
+    volumes:
+      - .:/code
+    ports:
+      - "5000"
+      - "9224:9224"
+
+  ngrok:
+    image: wernight/ngrok
+    links:
+      - mediaapp:5000
+    command: ngrok http mediaapp:5000
+    ports:
+      - "4040"
+
